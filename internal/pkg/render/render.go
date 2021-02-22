@@ -8,7 +8,7 @@ import (
 
 type Body struct {
 	Title  string
-	Videos []pb.Video
+	Videos []*pb.Video
 }
 
 // Contents get contents from filename

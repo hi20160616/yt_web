@@ -23,7 +23,7 @@ func (h *Handler) Init() error {
 	return nil
 }
 
-func (h *Handler) videos(cid string) (*pb.Videos, error) {
+func (h *Handler) Videos(cid string) (*pb.Videos, error) {
 	// only 30 videos caught every time
 	ctx, cancel := context.WithTimeout(context.Background(), 30*3*time.Second)
 	defer cancel()
@@ -32,7 +32,7 @@ func (h *Handler) videos(cid string) (*pb.Videos, error) {
 }
 
 // video assume timeout is 10" for a video
-func (h *Handler) video(vid string) (*pb.Video, error) {
+func (h *Handler) Video(vid string) (*pb.Video, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	return h.client.GetVideo(ctx, &pb.Video{Vid: vid})

@@ -8,7 +8,7 @@ func TestVideo(t *testing.T) {
 		t.Error(err)
 	}
 
-	v, err := h.video("DRZ3tWu-DzY")
+	v, err := h.Video("DRZ3tWu-DzY")
 	if err != nil {
 		t.Error(err)
 	}
