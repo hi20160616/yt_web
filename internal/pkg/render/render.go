@@ -1,12 +1,15 @@
 package render
 
 import (
-	pb "github.com/hi20160616/yt_fetcher/api/yt_fetcher/api"
 	"io"
 	"os"
+	"path"
+	"text/template"
+
+	pb "github.com/hi20160616/yt_fetcher/api/yt_fetcher/api"
 )
 
-type Body struct {
+type Page struct {
 	Title  string
 	Videos []*pb.Video
 }
@@ -34,4 +37,13 @@ func Contents(filename string) (string, error) {
 		}
 	}
 	return string(result), nil // f will be closed if we return here.
+}
+
+// Derive derive values to be displayed.
+func (p *Page) Derive(w io.Writer, filename string) error {
+	t := template.Must(template.New(path.Base(filename)).ParseFiles(filename))
+	if err := t.Execute(w, p); err != nil {
+		return err
+	}
+	return nil
 }

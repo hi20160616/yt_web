@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/hi20160616/yt_web/internal/data"
+	"github.com/hi20160616/yt_web/internal/pkg/render"
 )
 
 // template usage example: https://play.golang.org/p/yQzaUEypTe2
@@ -35,17 +36,19 @@ func main() {
 		if err := h.Init(); err != nil {
 			log.Println(err)
 		}
-		p := strings.Split(req.URL.Path, "/")
-		if p[1] == "cid" {
-			res, err := h.Videos(p[2])
+		u := strings.Split(req.URL.Path, "/")
+		if u[1] == "cid" {
+			res, err := h.Videos(u[2])
 			if err != nil {
 				log.Println(err)
 			}
-			for _, video := range res.Videos {
-				io.WriteString(w, video.Title)
-				io.WriteString(w, "\n")
+			p := &render.Page{
+				Title:  "Channel id: " + u[1],
+				Videos: res.Videos,
 			}
-
+			if err = p.Derive(w, "./templates/default/index.html"); err != nil {
+				log.Println(err)
+			}
 		}
 	}
 	http.HandleFunc("/cid/", channelHandler)

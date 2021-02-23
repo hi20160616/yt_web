@@ -8,23 +8,23 @@
 		<!-- Bootstrap CSS -->
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
 
-		<title>Youtube Info Index</title>
+		<title>{{.Title}}</title>
 	</head>
 	<body>
 		<table class="table-striped table-hover">
 			<thead class="table-light">
 				<tr>
-					<td>#</td>
 					<td>Title</td>
 					<td>Channel</td>
 					<td>LastUpdate</td>
-					<td>Opts</td>
 				</tr>
 			</thead>
 			<tbody>
-				{{range .Items}}
+				{{range .Videos}}
 				<tr>
-					{{.}}
+					<td><a href="/vid/{{.Vid}}" target="_blank">{{.Title}}</a></td>
+					<td><a href="/cid/{{.Cid}}" target="_blank">{{.Cname}}</a></td>
+					<td>{{.LastUpdated}}</td>
 				</tr>
 				{{end}}
 			</tbody>
