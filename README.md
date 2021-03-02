@@ -6,7 +6,15 @@ This is a Frontend to display youtube informations fetched by [youtube fetcher](
 
 ## Prepare
 
-yt_fetcher Preparation complete
+### grpc prepare
+
+```
+go get -u github.com/hi20160616/yt_fetcher
+```
+
+### service prepare
+
+yt_fetcher Preparation
 - MySql installed and standby
 - run `./yt_fetcher`
 

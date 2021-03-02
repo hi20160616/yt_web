@@ -1,22 +1,30 @@
+// template usage example: https://play.golang.org/p/yQzaUEypTe2
 package render
 
 import (
+	"html/template"
 	"io"
 	"path"
-	"text/template"
 
 	pb "github.com/hi20160616/yt_fetcher/api/yt_fetcher/api"
 )
 
 type Page struct {
-	Title  string
-	Videos []*pb.Video
+	ChannelName string
+	Videos      []*pb.Video
+}
+
+func summary(v *pb.Video) string {
+	return v.Description[:300]
 }
 
 // Derive derive values to be displayed.
 func (p *Page) Derive(w io.Writer, filename string) error {
-	t := template.Must(template.New(path.Base(filename)).ParseFiles(filename))
-	if err := t.Execute(w, p); err != nil {
+	report := template.Must(template.New(path.Base(filename)).
+		Funcs(template.FuncMap{"summary": summary}).
+		ParseFiles(filename))
+	// fmt.Println(t)
+	if err := report.Execute(w, p); err != nil {
 		return err
 	}
 	return nil

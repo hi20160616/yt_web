@@ -12,13 +12,19 @@ func TestParse(t *testing.T) {
 	if err := h.Init(); err != nil {
 		t.Error(err)
 	}
-	v, err := h.Videos("UCCtTgzGzQSWVzCG0xR7U-MQ")
+	cid := "UCCtTgzGzQSWVzCG0xR7U-MQ"
+	v, err := h.Videos(cid)
 	if err != nil {
 		t.Error(err)
 	}
 
-	p := &Page{Title: "Youtube video index"}
+	cname, err := h.ChannelName(cid)
+	if err != nil {
+		t.Error(err)
+	}
+	p := &Page{ChannelName: cname}
 	p.Videos = v.Videos
+	p.ChannelName = cname
 	if err = p.Derive(os.Stdout, "../../../templates/default/index.html"); err != nil {
 		t.Error(err)
 	}
