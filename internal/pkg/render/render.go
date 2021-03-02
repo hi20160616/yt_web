@@ -15,15 +15,17 @@ type Page struct {
 }
 
 func summary(v *pb.Video) string {
-	return v.Description[:300]
+	return v.Description[:600]
 }
 
 // Derive derive values to be displayed.
 func (p *Page) Derive(w io.Writer, filename string) error {
+	funcs := template.FuncMap{
+		"summary": summary,
+	}
 	report := template.Must(template.New(path.Base(filename)).
-		Funcs(template.FuncMap{"summary": summary}).
+		Funcs(funcs).
 		ParseFiles(filename))
-	// fmt.Println(t)
 	if err := report.Execute(w, p); err != nil {
 		return err
 	}
