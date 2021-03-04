@@ -26,7 +26,7 @@ type Opts struct {
 	Tmpls []string
 }
 
-func summary(v *pb.Video) string {
+func Summary(v *pb.Video) string {
 	dRune := []rune(v.Description)
 	if len(dRune) <= 300 {
 		return v.Description

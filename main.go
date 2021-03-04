@@ -67,21 +67,18 @@ func main() {
 			if err != nil {
 				log.Println(err)
 			}
-			res, err := h.Videos(u[2])
+			vs, err := h.Videos(u[2])
 			if err != nil {
 				log.Println(err)
 			}
 			p := &render.PageCid{
 				ChannelName: c.Name,
-				Videos:      res.Videos,
+				Videos:      vs.Videos,
 			}
-			summary := func(v *pb.Video) string {
-				return v.Description[:600]
-			}
-			funcMap := template.FuncMap{"summary": summary}
+			funcMap := template.FuncMap{"summary": render.Summary}
 
 			opts := &render.Opts{
-				Title: p.ChannelName, // TODO: rm p
+				Title: p.ChannelName,
 				Data:  p,
 				Funcs: funcMap,
 				Tmpls: []string{"layout", "navbar", "cid"},
