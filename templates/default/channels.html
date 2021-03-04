@@ -3,20 +3,18 @@
     <h1 class="display-4" style="user-select: auto;">所有爬取过的频道</h1>
     <!-- <p class="lead" style="user-select: auto;">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p> -->
 </div>
-<div class="row g-3">
-    {{range .Channels}}
-    <div class="col-4">
-	<div class="p-3 border bg-light">
-	    <div class="card">
-		<div class="card-body">
-		    <h5 class="card-title">{{.Name}}</h5>
-		    <h6 class="card-subtitle mb-2 text-muted">{{.Name}}</h6>
-		    <p class="card-text">频道备注，可以为空</p>
-		    <div class="btn-group" role="group" aria-label="两个选择">
-			<a type="button" class="btn btn-outline-primary btn-sm" href="../cid/{{.Id}}">查看爬取结果</a>
-			<a type="button" class="btn btn-outline-danger btn-sm" href="https://youtube.com/channel/{{.Id}}">在Youtube打开</a>
-		    </div>
-		</div>
+<div class="breadcrumb">
+    {{range $i, $channel := .Channels}}
+    <div class="card border-0 p-0">
+	<div class="card-body">
+	    <div class="btn-group" role="group" aria-label="">
+		<a type="button" class="btn btn-outline-danger btn-sm" href="https://youtube.com/channel/{{$channel.Id}}">源</a>
+		<a type="button" class="btn btn-outline-primary btn-sm" href="../cid/{{$channel.Id}}">{{$channel.Name}}</a>
+		<a type="button" class="btn btn-outline-secondary btn-sm disabled" href="#">
+		    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-clock-fill" viewBox="0 0 20 20">
+			<path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 3.5a.5.5 0 0 0-1 0V9a.5.5 0 0 0 .252.434l3.5 2a.5.5 0 0 0 .496-.868L8 8.71V3.5z"/>
+		    </svg>{{$channel.LastUpdated}}
+		</a>
 	    </div>
 	</div>
     </div>

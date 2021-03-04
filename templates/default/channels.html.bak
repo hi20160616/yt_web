@@ -1,0 +1,25 @@
+{{define "content"}}
+<div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center" style="user-select: auto;">
+    <h1 class="display-4" style="user-select: auto;">所有爬取过的频道</h1>
+    <!-- <p class="lead" style="user-select: auto;">Quickly build an effective pricing table for your potential customers with this Bootstrap example. It’s built with default Bootstrap components and utilities with little customization.</p> -->
+</div>
+<div class="row g-3">
+    {{range .Channels}}
+    <div class="col-4">
+	<div class="p-3 border bg-light">
+	    <div class="card">
+		<div class="card-body">
+		    <h5 class="card-title">{{.Name}}</h5>
+		    <h6 class="card-subtitle mb-2 text-muted">{{.Name}}</h6>
+		    <p class="card-text">频道备注，可以为空</p>
+		    <div class="btn-group" role="group" aria-label="两个选择">
+			<a type="button" class="btn btn-outline-primary btn-sm" href="../cid/{{.Id}}">查看爬取结果</a>
+			<a type="button" class="btn btn-outline-danger btn-sm" href="https://youtube.com/channel/{{.Id}}">在Youtube打开</a>
+		    </div>
+		</div>
+	    </div>
+	</div>
+    </div>
+    {{end}}
+</div>
+{{end}}

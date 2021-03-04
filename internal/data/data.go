@@ -43,7 +43,18 @@ func (h *Handler) Channel(c *pb.Channel) (*pb.Channel, error) {
 func (h *Handler) Channels(cs *pb.Channels) (*pb.Channels, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
-	return h.client.GetChannels(ctx, cs)
+	cs, err := h.client.GetChannels(ctx, cs)
+	if err != nil {
+		return nil, err
+	}
+	for i := range cs.Channels {
+		t, err := strconv.ParseInt(cs.Channels[i].LastUpdated[:10], 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		cs.Channels[i].LastUpdated = time.Unix(t, 0).Format("01-02 15:04")
+	}
+	return cs, nil
 }
 
 func (h *Handler) Videos(cid string) (*pb.Videos, error) {
@@ -66,7 +77,7 @@ func (h *Handler) Videos(cid string) (*pb.Videos, error) {
 		if err != nil {
 			return nil, err
 		}
-		vs.Videos[i].LastUpdated = time.Unix(t, 0).String()
+		vs.Videos[i].LastUpdated = time.Unix(t, 0).Format("01-02 15:04")
 	}
 	return vs, nil
 }
@@ -80,7 +91,7 @@ func (h *Handler) Video(vid string) (*pb.Video, error) {
 	if err != nil {
 		return nil, err
 	}
-	v.LastUpdated = time.Unix(t, 0).String()
+	v.LastUpdated = time.Unix(t, 0).Format("2006-01-02 15:04:05")
 	return v, nil
 }
 
