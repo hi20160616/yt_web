@@ -1,6 +1,7 @@
 package main
 
 import (
+	"html/template"
 	"io"
 	"io/ioutil"
 	"log"
@@ -13,6 +14,24 @@ import (
 )
 
 func main() {
+	channelsHandler := func(w http.ResponseWriter, r *http.Request) {
+		h := new(data.Handler)
+		if err := h.Init(); err != nil {
+			log.Println(err)
+		}
+		cs := &pb.Channels{}
+		cs, err := h.Channels(cs)
+		if err != nil {
+			log.Println(err)
+		}
+
+		render.Derive(w, &render.Opts{
+			Title: "Channels",
+			Data:  cs,
+			Tmpls: []string{"layout", "navbar", "channels"}})
+	}
+	http.HandleFunc("/channels/", channelsHandler)
+
 	videoHandler := func(w http.ResponseWriter, req *http.Request) {
 		h := new(data.Handler)
 		if err := h.Init(); err != nil {
@@ -47,11 +66,22 @@ func main() {
 			if err != nil {
 				log.Println(err)
 			}
-			p := &render.Page{
+			p := &render.PageCid{
 				ChannelName: c.Name,
 				Videos:      res.Videos,
 			}
-			if err = p.Derive(w, "./templates/default/cid.html"); err != nil {
+			summary := func(v *pb.Video) string {
+				return v.Description[:600]
+			}
+			funcMap := template.FuncMap{"summary": summary}
+
+			opts := &render.Opts{
+				Title: p.ChannelName, // TODO: rm p
+				Data:  p,
+				Funcs: funcMap,
+				Tmpls: []string{"layout", "navbar", "cid"},
+			}
+			if err = render.Derive(w, opts); err != nil {
 				log.Println(err)
 			}
 		}

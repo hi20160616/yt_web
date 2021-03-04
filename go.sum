@@ -111,10 +111,8 @@ github.com/hashicorp/mdns v1.0.0/go.mod h1:tL+uN++7HEJ6SQLQ2/p+z2pH24WQKWjBPkE0m
 github.com/hashicorp/memberlist v0.1.3/go.mod h1:ajVTdAv/9Im8oMAAj5G31PhhMCZJV2pPBoIllUwCN7I=
 github.com/hashicorp/serf v0.8.2/go.mod h1:6hOLApaqBFA1NXqRQAsxw9QxuDEvNxSQRwA/JwenrHc=
 github.com/hi20160616/exhtml v0.0.0-20210202082235-6cd27713f638/go.mod h1:+ktLo2MkwIcxQgaSpnjTf0MRew89DeqzBv/dl7YvCN4=
-github.com/hi20160616/yt_fetcher v0.0.0-20210225131656-7d0acac9661a h1:jzjFGbDIw2/9DfirMKwQK5FnxTYkLxWHXgj4vDl5O/U=
-github.com/hi20160616/yt_fetcher v0.0.0-20210225131656-7d0acac9661a/go.mod h1:MxEjjaia5kS3+GPmIg1T79B6tx59IpJyB9j7jjfhl64=
-github.com/hi20160616/yt_fetcher v0.0.0-20210301151645-5425a0908d66 h1:NuXGcTdn0I5bY+Ew1FB4uyi+AVIBoudTiJ0iDexnyRc=
-github.com/hi20160616/yt_fetcher v0.0.0-20210301151645-5425a0908d66/go.mod h1:MxEjjaia5kS3+GPmIg1T79B6tx59IpJyB9j7jjfhl64=
+github.com/hi20160616/yt_fetcher v0.0.0-20210302154725-3167d32eb11b h1:LqZkcrmKkVyPgnuxh8wvhBSvXF3puR/Oaos03m1xBqE=
+github.com/hi20160616/yt_fetcher v0.0.0-20210302154725-3167d32eb11b/go.mod h1:MxEjjaia5kS3+GPmIg1T79B6tx59IpJyB9j7jjfhl64=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/jonboulle/clockwork v0.1.0/go.mod h1:Ii8DK3G1RaLaWxj9trq07+26W01tbo22gdxWY5EU2bo=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=

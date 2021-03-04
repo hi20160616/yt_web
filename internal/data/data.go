@@ -40,6 +40,12 @@ func (h *Handler) Channel(c *pb.Channel) (*pb.Channel, error) {
 	return h.client.GetChannel(ctx, c)
 }
 
+func (h *Handler) Channels(cs *pb.Channels) (*pb.Channels, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
+	defer cancel()
+	return h.client.GetChannels(ctx, cs)
+}
+
 func (h *Handler) Videos(cid string) (*pb.Videos, error) {
 	// only 30 videos caught every time
 	ctx, cancel := context.WithTimeout(context.Background(), 30*3*time.Second)

@@ -52,3 +52,17 @@ func TestGetChannel(t *testing.T) {
 		t.Errorf("want: %v, got: %v", want, channel.Name)
 	}
 }
+
+func TestGetChannels(t *testing.T) {
+	h := &Handler{}
+	if err := h.Init(); err != nil {
+		t.Error(err)
+	}
+	cs, err := h.Channels(&pb.Channels{})
+	if err != nil {
+		t.Error(err)
+	}
+	for _, c := range cs.Channels {
+		fmt.Println(c)
+	}
+}
