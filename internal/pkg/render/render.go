@@ -27,11 +27,11 @@ type Opts struct {
 }
 
 func summary(v *pb.Video) string {
-	d := v.Description
-	if len(d) <= 600 {
-		return d
+	dRune := []rune(v.Description)
+	if len(dRune) <= 300 {
+		return v.Description
 	}
-	return d[:600]
+	return string(dRune[:300])
 }
 
 func Derive(w io.Writer, opts *Opts) error {
