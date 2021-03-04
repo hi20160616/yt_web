@@ -43,9 +43,14 @@ func main() {
 			if err != nil {
 				log.Println(err)
 			}
-			io.WriteString(w, res.Title)
-			io.WriteString(w, "\n")
-			io.WriteString(w, res.Description)
+			opts := &render.Opts{
+				Title: res.Title,
+				Data:  res,
+				Tmpls: []string{"layout", "navbar", "vid"},
+			}
+			if err = render.Derive(w, opts); err != nil {
+				log.Println(err)
+			}
 		}
 	}
 	http.HandleFunc("/vid/", videoHandler)

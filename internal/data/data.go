@@ -75,7 +75,13 @@ func (h *Handler) Videos(cid string) (*pb.Videos, error) {
 func (h *Handler) Video(vid string) (*pb.Video, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	return h.client.GetVideo(ctx, &pb.Video{Id: vid})
+	v, err := h.client.GetVideo(ctx, &pb.Video{Id: vid})
+	t, err := strconv.ParseInt(v.LastUpdated[:10], 10, 64)
+	if err != nil {
+		return nil, err
+	}
+	v.LastUpdated = time.Unix(t, 0).String()
+	return v, nil
 }
 
 func (h *Handler) Close() error {
