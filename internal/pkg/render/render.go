@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"html/template"
 	"io"
-	"log"
-	"os"
 
 	pb "github.com/hi20160616/yt_fetcher/api/yt_fetcher/api"
 )
@@ -29,43 +27,11 @@ type Opts struct {
 }
 
 func summary(v *pb.Video) string {
-	return v.Description[:600]
-}
-
-func Combin() error {
-	pattern := "../../../templates/default/tmpl/*.html"
-	tmpls, err := template.ParseGlob(pattern)
-	if err != nil {
-		return err
+	d := v.Description
+	if len(d) <= 600 {
+		return d
 	}
-	tmpl := template.Must(tmpls.Clone())
-	err = tmpl.Execute(os.Stdout, nil)
-	if err != nil {
-		log.Fatalf("template execution: %s", err)
-	}
-	return nil
-}
-
-// Derive derive values to be displayed.
-func (pc *PageCid) Derive(w io.Writer, filename ...string) error {
-	overlay := `{{define "title"}}{{.ChannelName}}{{end}}`
-	funcs := template.FuncMap{
-		"summary": summary,
-	}
-	temp, err := template.ParseFiles(filename...)
-	if err != nil {
-		return err
-	}
-	overlayTmpl, err := template.Must(
-		temp.Funcs(funcs).Clone()).
-		Parse(overlay)
-	if err != nil {
-		return err
-	}
-	if err = overlayTmpl.Execute(w, pc); err != nil {
-		return err
-	}
-	return nil
+	return d[:600]
 }
 
 func Derive(w io.Writer, opts *Opts) error {
