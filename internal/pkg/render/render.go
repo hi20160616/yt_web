@@ -14,11 +14,6 @@ type PageCid struct {
 	Videos      []*pb.Video
 }
 
-type templateFile struct {
-	name     string
-	contents string
-}
-
 type Opts struct {
 	Data  interface{}
 	Title string
