@@ -2,6 +2,7 @@ package data
 
 import (
 	"context"
+	"sort"
 	"strconv"
 	"time"
 
@@ -12,6 +13,22 @@ import (
 type Handler struct {
 	conn   *grpc.ClientConn
 	client pb.YoutubeFetcherClient
+}
+
+type ByLastUpdated []*pb.Video
+
+func (b ByLastUpdated) Len() int {
+	return len(b)
+}
+
+func (b ByLastUpdated) Swap(i, j int) {
+	b[i], b[j] = b[j], b[i]
+}
+
+func (b ByLastUpdated) Less(i, j int) bool {
+	bi, _ := strconv.ParseInt(b[i].LastUpdated, 10, 64)
+	bj, _ := strconv.ParseInt(b[j].LastUpdated, 10, 64)
+	return bi < bj
 }
 
 func (h *Handler) Init() error {
@@ -66,6 +83,8 @@ func (h *Handler) Videos(cid string) (*pb.Videos, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	sort.Sort(sort.Reverse(ByLastUpdated(vs.Videos)))
 	// fmt timestamp to RFC3339
 	for i := range vs.Videos {
 		// nano second dealer
