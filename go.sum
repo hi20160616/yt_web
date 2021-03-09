@@ -113,6 +113,10 @@ github.com/hashicorp/serf v0.8.2/go.mod h1:6hOLApaqBFA1NXqRQAsxw9QxuDEvNxSQRwA/J
 github.com/hi20160616/exhtml v0.0.0-20210202082235-6cd27713f638/go.mod h1:+ktLo2MkwIcxQgaSpnjTf0MRew89DeqzBv/dl7YvCN4=
 github.com/hi20160616/yt_fetcher v0.0.0-20210302154725-3167d32eb11b h1:LqZkcrmKkVyPgnuxh8wvhBSvXF3puR/Oaos03m1xBqE=
 github.com/hi20160616/yt_fetcher v0.0.0-20210302154725-3167d32eb11b/go.mod h1:MxEjjaia5kS3+GPmIg1T79B6tx59IpJyB9j7jjfhl64=
+github.com/hi20160616/yt_fetcher v0.0.0-20210308125437-387d1be8f2df h1:NBKwTEgdsS4JJM7mY9/kOnNnVpo/hMGcISzUK+usQ6s=
+github.com/hi20160616/yt_fetcher v0.0.0-20210308125437-387d1be8f2df/go.mod h1:MxEjjaia5kS3+GPmIg1T79B6tx59IpJyB9j7jjfhl64=
+github.com/hi20160616/yt_fetcher v0.0.0-20210309045659-dd638594b4f3 h1:3I1GT3b0vJsXxfsQfjBQL8/WknV6RNzSpQNRZQMtAeI=
+github.com/hi20160616/yt_fetcher v0.0.0-20210309045659-dd638594b4f3/go.mod h1:MxEjjaia5kS3+GPmIg1T79B6tx59IpJyB9j7jjfhl64=
 github.com/inconshreveable/mousetrap v1.0.0/go.mod h1:PxqpIevigyE2G7u3NXJIT2ANytuPF1OarO4DADm73n8=
 github.com/jonboulle/clockwork v0.1.0/go.mod h1:Ii8DK3G1RaLaWxj9trq07+26W01tbo22gdxWY5EU2bo=
 github.com/json-iterator/go v1.1.6/go.mod h1:+SdeFBvtyEkXs7REEP0seUULqWtbJapLOCVDaaPEHmU=

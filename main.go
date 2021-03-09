@@ -14,6 +14,29 @@ import (
 )
 
 func main() {
+	indexHandler := func(w http.ResponseWriter, r *http.Request) {
+		h := new(data.Handler)
+		if err := h.Init(); err != nil {
+			log.Println(err)
+		}
+		vs := &pb.Videos{}
+		vs, err := h.VideosFromTo(vs)
+		if err != nil {
+			log.Println(err)
+		}
+
+		opts := &render.Opts{
+			Title: "Home",
+			Data:  vs,
+			Funcs: template.FuncMap{"summary": render.Summary},
+			Tmpls: []string{"layout", "navbar", "index"},
+		}
+		if err = render.Derive(w, opts); err != nil {
+			log.Println(err)
+		}
+	}
+	http.HandleFunc("/", indexHandler)
+
 	channelsHandler := func(w http.ResponseWriter, r *http.Request) {
 		h := new(data.Handler)
 		if err := h.Init(); err != nil {

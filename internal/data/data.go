@@ -84,21 +84,7 @@ func (h *Handler) Videos(cid string) (*pb.Videos, error) {
 		return nil, err
 	}
 
-	sort.Sort(sort.Reverse(ByLastUpdated(vs.Videos)))
-	// fmt timestamp to RFC3339
-	for i := range vs.Videos {
-		// nano second dealer
-		// t, err := strconv.ParseInt(vs.Videos[i].LastUpdated+"000", 10, 64)
-		// vs.Videos[i].LastUpdated = time.Unix(0, t).String()
-
-		// second dealer
-		t, err := strconv.ParseInt(vs.Videos[i].LastUpdated[:10], 10, 64)
-		if err != nil {
-			return nil, err
-		}
-		vs.Videos[i].LastUpdated = time.Unix(t, 0).Format("01-02 15:04")
-	}
-	return vs, nil
+	return fmtVideos(vs)
 }
 
 // video assume timeout is 10" for a video
@@ -116,4 +102,34 @@ func (h *Handler) Video(vid string) (*pb.Video, error) {
 
 func (h *Handler) Close() error {
 	return h.conn.Close()
+}
+
+func (h *Handler) VideosFromTo(vs *pb.Videos) (*pb.Videos, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	vs, err := h.client.GetVideosFromTo(ctx, &pb.Videos{})
+	if err != nil {
+		return nil, err
+	}
+	return fmtVideos(vs)
+}
+
+func fmtVideos(vs *pb.Videos) (*pb.Videos, error) {
+	sort.Sort(sort.Reverse(ByLastUpdated(vs.Videos)))
+	// fmt timestamp to RFC3339
+	for i := range vs.Videos {
+		// nano second dealer
+		// t, err := strconv.ParseInt(vs.Videos[i].LastUpdated+"000", 10, 64)
+		// vs.Videos[i].LastUpdated = time.Unix(0, t).String()
+
+		// second dealer
+		t, err := strconv.ParseInt(vs.Videos[i].LastUpdated[:10], 10, 64)
+		if err != nil {
+			return nil, err
+		}
+		vs.Videos[i].LastUpdated = time.Unix(t, 0).Format("01-02 15:04")
+	}
+
+	return vs, nil
 }
