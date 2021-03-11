@@ -19,6 +19,7 @@ func main() {
 		if err := h.Init(); err != nil {
 			log.Println(err)
 		}
+		defer h.Close()
 		vs := &pb.Videos{}
 		vs, err := h.VideosFromTo(vs)
 		if err != nil {
@@ -42,6 +43,7 @@ func main() {
 		if err := h.Init(); err != nil {
 			log.Println(err)
 		}
+		defer h.Close()
 		cs := &pb.Channels{}
 		cs, err := h.Channels(cs)
 		if err != nil {
@@ -60,6 +62,7 @@ func main() {
 		if err := h.Init(); err != nil {
 			log.Println(err)
 		}
+		defer h.Close()
 		p := strings.Split(req.URL.Path, "/")
 		if p[1] == "vid" {
 			res, err := h.Video(p[2])
@@ -85,33 +88,58 @@ func main() {
 		}
 		defer h.Close()
 		u := strings.Split(req.URL.Path, "/")
-		if u[1] == "cid" {
-			c, err := h.Channel(&pb.Channel{Id: u[2]})
-			if err != nil {
-				log.Println(err)
-			}
-			vs, err := h.Videos(u[2])
-			if err != nil {
-				log.Println(err)
-			}
-			p := &render.PageCid{
-				ChannelName: c.Name,
-				Videos:      vs.Videos,
-			}
-			funcMap := template.FuncMap{"summary": render.Summary}
+		c, err := h.Channel(&pb.Channel{Id: u[2]})
+		if err != nil {
+			log.Println(err)
+		}
+		vs, err := h.Videos(u[2])
+		if err != nil {
+			log.Println(err)
+		}
+		p := &render.PageCid{
+			ChannelName: c.Name,
+			Videos:      vs.Videos,
+		}
+		funcMap := template.FuncMap{"summary": render.Summary}
 
-			opts := &render.Opts{
-				Title: p.ChannelName,
-				Data:  p,
-				Funcs: funcMap,
-				Tmpls: []string{"layout", "navbar", "cid"},
-			}
-			if err = render.Derive(w, opts); err != nil {
-				log.Println(err)
-			}
+		opts := &render.Opts{
+			Title: p.ChannelName,
+			Data:  p,
+			Funcs: funcMap,
+			Tmpls: []string{"layout", "navbar", "cid"},
+		}
+		if err = render.Derive(w, opts); err != nil {
+			log.Println(err)
 		}
 	}
 	http.HandleFunc("/cid/", cidHandler)
+
+	searchHandler := func(w http.ResponseWriter, r *http.Request) {
+		h := new(data.Handler)
+		if err := h.Init(); err != nil {
+			log.Println(err)
+		}
+		defer h.Close()
+
+		u := r.URL.Query().Get("search")
+		kws := strings.Split(u, " ")
+		vs, err := h.SearchVideos(&pb.Videos{Keywords: kws})
+		if err != nil {
+			log.Println(err)
+		}
+		funcMap := template.FuncMap{"summary": render.Summary}
+
+		opts := &render.Opts{
+			Title: "Search Result",
+			Data:  vs,
+			Funcs: funcMap,
+			Tmpls: []string{"layout", "navbar", "search"},
+		}
+		if err = render.Derive(w, opts); err != nil {
+			log.Println(err)
+		}
+	}
+	http.HandleFunc("/search/", searchHandler)
 
 	staticHandler := func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "text/css; charset=utf-8")

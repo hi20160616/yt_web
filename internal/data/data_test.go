@@ -66,3 +66,17 @@ func TestGetChannels(t *testing.T) {
 		fmt.Println(c)
 	}
 }
+
+func TestSearchVideos(t *testing.T) {
+	h := &Handler{}
+	if err := h.Init(); err != nil {
+		t.Error(err)
+	}
+	vs, err := h.SearchVideos(&pb.Videos{Keywords: []string{"老高"}})
+	if err != nil {
+		t.Error(err)
+	}
+	for _, v := range vs.Videos {
+		fmt.Println(v.Title)
+	}
+}

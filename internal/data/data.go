@@ -115,6 +115,17 @@ func (h *Handler) VideosFromTo(vs *pb.Videos) (*pb.Videos, error) {
 	return fmtVideos(vs)
 }
 
+func (h *Handler) SearchVideos(vs *pb.Videos) (*pb.Videos, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	vs, err := h.client.SearchVideos(ctx, vs)
+	if err != nil {
+		return nil, err
+	}
+	return fmtVideos(vs)
+}
+
 func fmtVideos(vs *pb.Videos) (*pb.Videos, error) {
 	sort.Sort(sort.Reverse(ByLastUpdated(vs.Videos)))
 	// fmt timestamp to RFC3339
