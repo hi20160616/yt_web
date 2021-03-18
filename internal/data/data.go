@@ -33,7 +33,7 @@ func (b ByLastUpdated) Less(i, j int) bool {
 
 func (h *Handler) Init() error {
 	var err error
-	h.conn, err = grpc.Dial("localhost:10000", grpc.WithInsecure(), grpc.WithBlock())
+	h.conn, err = grpc.Dial("localhost:10000", grpc.WithInsecure(), grpc.WithBlock(), grpc.WithMaxMsgSize(32*10e6))
 	if err != nil {
 		return err
 	}
