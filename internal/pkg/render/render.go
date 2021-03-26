@@ -29,6 +29,15 @@ func Summary(v *pb.Video) string {
 	return string(dRune[:300])
 }
 
+func Thumbnail(v *pb.Video) string {
+	for _, th := range v.Thumbnails {
+		if th.Width == 246 {
+			return th.URL
+		}
+	}
+	return ""
+}
+
 func Derive(w io.Writer, opts *Opts) error {
 	overlayTitle := `{{define "title"}}` + opts.Title + `{{end}}`
 	var tmpls []string

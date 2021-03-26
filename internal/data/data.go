@@ -75,7 +75,6 @@ func (h *Handler) Channels(cs *pb.Channels) (*pb.Channels, error) {
 }
 
 func (h *Handler) Videos(cid string) (*pb.Videos, error) {
-	// only 30 videos caught every time
 	ctx, cancel := context.WithTimeout(context.Background(), 30*3*time.Second)
 	defer cancel()
 

@@ -10,7 +10,10 @@
 	    {{range .Videos}}
 	    <div class="col" style="user-select: auto;">
 		<div class="card shadow-sm" style="user-select: auto;">
-		    <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false" style="user-select: auto;"><title style="user-select: auto;">Placeholder</title><rect width="100%" height="100%" fill="#55595c" style="user-select: auto;"></rect><text x="80%" y="90%" fill="#eceeef" dy=".3em" style="user-select: auto;">{{.Duration}}</text></svg>
+		    <a class="position-relative" href="/vid/{{.Id}}">
+			<img src="{{thumbnail .}}" class="card-img img-fluid" alt="...">
+			<span class="position-absolute bottom-0 end-0 translate-middle badge rounded bg-dark">{{.Duration}}</span>
+		    </a>
 
 		    <div class="card-body" style="user-select: auto;">
 			<h5><a class="text-decoration-none" href="/vid/{{.Id}}">{{.Title}}</a></h5>

@@ -29,7 +29,10 @@ func main() {
 		opts := &render.Opts{
 			Title: "Home",
 			Data:  vs,
-			Funcs: template.FuncMap{"summary": render.Summary},
+			Funcs: template.FuncMap{
+				"summary":   render.Summary,
+				"thumbnail": render.Thumbnail,
+			},
 			Tmpls: []string{"layout", "navbar", "index"},
 		}
 		if err = render.Derive(w, opts); err != nil {
@@ -100,7 +103,10 @@ func main() {
 			ChannelName: c.Name,
 			Videos:      vs.Videos,
 		}
-		funcMap := template.FuncMap{"summary": render.Summary}
+		funcMap := template.FuncMap{
+			"summary":   render.Summary,
+			"thumbnail": render.Thumbnail,
+		}
 
 		opts := &render.Opts{
 			Title: p.ChannelName,
@@ -127,7 +133,10 @@ func main() {
 		if err != nil {
 			log.Println(err)
 		}
-		funcMap := template.FuncMap{"summary": render.Summary}
+		funcMap := template.FuncMap{
+			"summary":   render.Summary,
+			"thumbnail": render.Thumbnail,
+		}
 
 		opts := &render.Opts{
 			Title: "Search Result",
